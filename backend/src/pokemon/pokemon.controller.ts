@@ -43,7 +43,7 @@ export class PokemonController {
   @Put(':id')
   async updatePokemon(@Body() pokemonDto: any, @Param('id') id: string): Promise<void> {
     try {
-      return await this.pokemonService.updatePokemon(id);
+      return await this.pokemonService.updatePokemon(id, pokemonDto);
     }
     catch (error) {
       console.log(error);

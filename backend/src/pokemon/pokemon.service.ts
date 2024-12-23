@@ -41,12 +41,8 @@ export class PokemonService {
   }
 
   async createPokemon(pokemonDto: any): Promise<any> {
-    console.log(pokemonDto);
-
     const id_query = 'SELECT MAX(pokemon_id) FROM pokemon;';
     const pokemon_id = await this.databaseService.query(id_query).then(res => res.rows[0].max + 1);
-
-    console.log(pokemon_id);
 
     const pokemon_query = 'insert into pokemon (pokemon_id, name, weight, height) values ($1, $2, $3, $4);';
     const pokemon = await this.databaseService.query(
@@ -76,13 +72,22 @@ export class PokemonService {
     return {pokemonId: pokemon_id};
   }
 
-  async updatePokemon(id: string): Promise<void> {
-    const query = 'update pokemon set (name = $1, height = $1, weight = $1) where pokemon_id = $1;';
-    await this.databaseService.query(query, [id]);
+  async updatePokemon(id: string, pokemonDto: any): Promise<void> {
+    const query = 'update pokemon set (name = $2, height = $3, weight = $4) where pokemon_id = $1;';
+    await this.databaseService.query(query, [id, pokemonDto.name, pokemonDto.height, pokemonDto.weight]);
   }
 
   async deletePokemon(id: string): Promise<void> {
-    const query = '';
-    await this.databaseService.query(query, [id]);
+    const pokemon_query = 'DELETE FROM pokemon WHERE pokemon_id = $1;';
+    await this.databaseService.query(pokemon_query, [id]);
+
+    const moves_query = 'DELETE FROM pokemon_moves WHERE pokemon_id = $1;';
+    await this.databaseService.query(moves_query, [id]);
+
+    const abilities_query = 'DELETE FROM pokemon_abilities WHERE pokemon_id = $1;';
+    await this.databaseService.query(abilities_query, [id]);
+
+    const types_query = 'DELETE FROM pokemon_types WHERE pokemon_id = $1;';
+    await this.databaseService.query(types_query, [id]);
   }
 }
