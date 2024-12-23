@@ -60,19 +60,23 @@ export const columns: ColumnDef<PokemonDto>[] = [
                 Copy Pokemon name
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setModalOpen(true)}>View Pokemon</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setModalOpen(true)}>
+                View Pokemon
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {(isModalOpen && (
+          {isModalOpen && (
             <PokemonCard
               isOpen={isModalOpen}
               onClose={() => setModalOpen(false)}
               pokemon={pokemon}
-              updatePokemon={handleUpdate} />
-          ))}
+              updatePokemon={handleUpdate}
+            />
+          )}
         </>
-      )
+      );
     },
   },
-]
+];
+
 

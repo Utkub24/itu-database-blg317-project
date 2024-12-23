@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PokemonDto from "./lib/dto/Pokemon.dto";
 import TypeDto from "./lib/dto/Type.dto";
 import MoveDto from "./lib/dto/Move.dto";
@@ -24,16 +24,27 @@ const App = () => {
     [new AbilityDto(1, "Static"), new AbilityDto(2, "Lightning Rod")]
   );
 
-  const pokemonData = [examplePokemon, new PokemonDto()];
+  const [pokemonData, setPokemonData] = useState<PokemonDto[]>([examplePokemon, new PokemonDto()])
+
+
 
   const handlePokemonUpdate = async(oldPokemon: PokemonDto, newPokemon: PokemonDto) => {
     try {
-      const pokemon = await PokemonService.updatePokemon(oldPokemon.id, newPokemon); // Geçersiz ID
-      console.log(pokemon);
+      //const pokemon = await PokemonService.updatePokemon(oldPokemon.id, newPokemon); // Geçersiz ID
+
+      setPokemonData((prevPokemonData) =>
+        prevPokemonData.map((pokemon) =>
+          pokemon.id === oldPokemon.id ? newPokemon : pokemon
+        )
+      );
+
+      console.log(newPokemon);
     } catch (error: any) {
       console.error("Error fetching Pokémon:", error.message);
     }
   };
+
+  
 
   return (
     <div>

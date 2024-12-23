@@ -19,18 +19,21 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  onUpdate: any
 }
 
 export function DataTable<TData, TValue>({
   columns,
-  data
-}: DataTableProps<TData, TValue>) {
+  data,
+  onUpdate,
+}: DataTableProps<TData, TValue> & { onUpdate?: (oldData: TData, newData: TData) => void }) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-  })
+    meta: {
+      onUpdate,
+    },
+  });
 
   return (
     <div className="rounded-md border">
@@ -38,18 +41,16 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                  </TableHead>
-                )
-              })}
+                </TableHead>
+              ))}
             </TableRow>
           ))}
         </TableHeader>
@@ -77,6 +78,6 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
 
