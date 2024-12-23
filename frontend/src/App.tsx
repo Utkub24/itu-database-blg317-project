@@ -166,11 +166,11 @@ const App = () => {
 
   const handleDeletePokemon = async (pokemon: PokemonDto) => {
     try {
-      //const res = await PokemonService.deletePokemon(pokemon.id); // Geçersiz ID
+      const res = await PokemonService.deletePokemon(pokemon.id); // Geçersiz ID
 
       setPokemonData((prevData) => prevData.filter((p) => p.id !== pokemon.id));
 
-      //console.log(res);
+      console.log(res);
     } catch (error: any) {
       console.error("Error deleting Pokémon:", error.message);
     }
