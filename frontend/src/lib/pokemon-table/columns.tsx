@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import PokemonDto from "../dto/Pokemon.dto"
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, ArrowUpDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -19,7 +19,17 @@ import { useState } from "react"
 export const columns: ColumnDef<PokemonDto>[] = [
   {
     accessorKey: "id",
-    header: "ID",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+          ID
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "name",

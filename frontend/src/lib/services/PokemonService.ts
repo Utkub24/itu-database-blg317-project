@@ -41,6 +41,7 @@ const PokemonService = {
     handleRequest(async () => {
       const response = await axios.get(`${API_BASE_URL}/pokemon/${pokemonId}`);
       const pokemon = response.data;
+      console.log(pokemon)
       return new PokemonDto(
         pokemon.pokemon_id,
         pokemon.name,
@@ -54,7 +55,7 @@ const PokemonService = {
               move.name,
               move.power,
               move.accuracy,
-              move.pp,
+              move.powerPoints,
               new TypeDto(move.type.id, move.type.name)
             )
         ),
@@ -98,7 +99,7 @@ const PokemonService = {
                   move.name,
                   move.power,
                   move.accuracy,
-                  move.pp,
+                  move.powerPoints,
                   new TypeDto(move.type.id, move.type.name)
                 )
             ),
@@ -125,7 +126,7 @@ const PokemonService = {
             move.name,
             move.power,
             move.accuracy,
-            move.pp,
+            move.powerPoints,
             new TypeDto(move.type.id, move.type.name)
           )
       );
