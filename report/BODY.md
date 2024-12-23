@@ -17,10 +17,17 @@ The web app is built with the following stack:
 
 ### Screenshots
 #### Main Page
+![](assets/mainpage.png)
+#### Viewing a Pokemon
+![](assets/viewpokemon.png)
 #### Adding a Pokemon
+![](assets/createpokemon.png)
 #### Editing a Pokemon
+![](assets/editpokemon.png)
 #### Deleting a Pokemon
+![](assets/deletepokemon.png)
 #### Searching for a Pokemon
+![](assets/searchpokemon.png)
 
 # SQL Queries & CRUD Operations
 
