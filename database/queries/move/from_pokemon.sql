@@ -1,2 +1,1 @@
-select (type.type_id, type.type_name) from type join pokemon_types on type.type_id = pokemon_types.type_id
-where type.type_id = $1;
+select (type.move_id, type.name) from move join pokemon_moves on move.move_id = pokemon_moves.move_id where pokemon_moves.pokemon_id = $1;
