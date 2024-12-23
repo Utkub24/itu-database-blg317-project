@@ -1,1 +1,1 @@
-SELECT * FROM move;
+SELECT move.move_id, move.name, move.power, move.accuracy, move.pp, type.type_id, type.type_name FROM move JOIN type ON move.type_id = type.type_id;
