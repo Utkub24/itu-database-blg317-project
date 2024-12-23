@@ -20,6 +20,9 @@ const App = () => {
     [
       new MoveDto(1, "Thunderbolt", 90, 100, 15, new TypeDto(1, "Electric")),
       new MoveDto(2, "Quick Attack", 40, 100, 30, new TypeDto(2, "Normal")),
+      new MoveDto(2, "Quick Attack", 40, 100, 30, new TypeDto(2, "Normal")),
+      new MoveDto(2, "Quick Attack", 40, 100, 30, new TypeDto(2, "Normal")),
+      new MoveDto(2, "Quick Attack", 40, 100, 30, new TypeDto(2, "Normal")),
     ],
     [new AbilityDto(1, "Static"), new AbilityDto(2, "Lightning Rod")]
   );

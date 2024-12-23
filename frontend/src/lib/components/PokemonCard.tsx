@@ -54,100 +54,104 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
           </button>
         </div>
 
-        {/* Modal Content */}
-        <ul className="space-y-2">
-          {/* Name */}
-          <li className="flex justify-between text-gray-700">
-            <span className="font-medium">Name:</span>
-            {isEditMode ? (
-              <input
-                type="text"
-                maxLength={40}
-                value={editedPokemon.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                className="border rounded-md p-1 text-sm w-2/3"
-              />
-            ) : (
-              <span>{pokemon.name}</span>
-            )}
-          </li>
+        {/* Scrollable Modal Content */}
+        <div className="max-h-[70vh] overflow-y-auto pr-4">
+          <ul className="space-y-2">
+            {/* Name */}
+            <li className="flex justify-between text-gray-700">
+              <span className="font-medium">Name:</span>
+              {isEditMode ? (
+                <input
+                  type="text"
+                  maxLength={40}
+                  value={editedPokemon.name}
+                  onChange={(e) => handleChange("name", e.target.value)}
+                  className="border rounded-md p-1 text-sm w-2/3"
+                />
+              ) : (
+                <span>{pokemon.name}</span>
+              )}
+            </li>
 
-          {/* Weight */}
-          <li className="flex justify-between text-gray-700">
-            <span className="font-medium">Weight (kg):</span>
-            {isEditMode ? (
-              <input
-                type="number"
-                min={0}
-                value={editedPokemon.weight}
-                onChange={(e) =>
-                  handleChange("weight", parseFloat(e.target.value))
-                }
-                className="border rounded-md p-1 text-sm w-2/3"
-              />
-            ) : (
-              <span>{pokemon.weight}</span>
-            )}
-          </li>
+            {/* Weight */}
+            <li className="flex justify-between text-gray-700">
+              <span className="font-medium">Weight (kg):</span>
+              {isEditMode ? (
+                <input
+                  type="number"
+                  min={0}
+                  value={editedPokemon.weight}
+                  onChange={(e) =>
+                    handleChange("weight", parseFloat(e.target.value))
+                  }
+                  className="border rounded-md p-1 text-sm w-2/3"
+                />
+              ) : (
+                <span>{pokemon.weight}</span>
+              )}
+            </li>
 
-          {/* Height */}
-          <li className="flex justify-between text-gray-700">
-            <span className="font-medium">Height (m):</span>
-            {isEditMode ? (
-              <input
-                type="number"
-                min={0}
-                value={editedPokemon.height}
-                onChange={(e) =>
-                  handleChange("height", parseFloat(e.target.value))
-                }
-                className="border rounded-md p-1 text-sm w-2/3"
-              />
-            ) : (
-              <span>{pokemon.height}</span>
-            )}
-          </li>
+            {/* Height */}
+            <li className="flex justify-between text-gray-700">
+              <span className="font-medium">Height (m):</span>
+              {isEditMode ? (
+                <input
+                  type="number"
+                  min={0}
+                  value={editedPokemon.height}
+                  onChange={(e) =>
+                    handleChange("height", parseFloat(e.target.value))
+                  }
+                  className="border rounded-md p-1 text-sm w-2/3"
+                />
+              ) : (
+                <span>{pokemon.height}</span>
+              )}
+            </li>
 
-          {/* Types */}
-          <li className="flex flex-col text-gray-700">
-            <span className="font-medium mb-1">Types:</span>
-            <div className="flex flex-wrap gap-2">
-              {pokemon.types.map((type, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-200 px-2 py-1 rounded-md text-sm"
-                >
-                  {type.name}
-                </span>
-              ))}
-            </div>
-          </li>
+            {/* Types */}
+            <li className="flex flex-col text-gray-700">
+              <span className="font-medium mb-1">Types:</span>
+              <div className="flex flex-wrap gap-2">
+                {pokemon.types.map((type, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-200 px-2 py-1 rounded-md text-sm"
+                  >
+                    {type.name}
+                  </span>
+                ))}
+              </div>
+            </li>
 
-          {/* Moves */}
-          <li className="flex flex-col text-gray-700">
-            <span className="font-medium mb-1">Moves:</span>
-            <div className="space-y-2">
-              {pokemon.moves.map((move) => (
-                <MoveCard key={move.id} move={move} />
-              ))}
-            </div>
-          </li>
+                {/* Abilities */}
+            <li className="flex flex-col text-gray-700">
+              <span className="font-medium mb-1">Abilities:</span>
+              <div className="flex flex-wrap gap-2">
+                {pokemon.abilities.map((ability, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-200 px-2 py-1 rounded-md text-sm"
+                  >
+                    {ability.name}
+                  </span>
+                ))}
+              </div>
+            </li>
+            
+            {/* Moves */}
+            <li className="flex flex-col text-gray-700">
+              <span className="font-medium mb-1">Moves:</span>
+              <div className="space-y-2">
+                {pokemon.moves.map((move) => (
+                  <MoveCard key={move.id} move={move} />
+                ))}
+              </div>
+            </li>
 
-          {/* Abilities */}
-          <li className="flex flex-col text-gray-700">
-            <span className="font-medium mb-1">Abilities:</span>
-            <div className="flex flex-wrap gap-2">
-              {pokemon.abilities.map((ability, index) => (
-                <span
-                  key={index}
-                  className="bg-gray-200 px-2 py-1 rounded-md text-sm"
-                >
-                  {ability.name}
-                </span>
-              ))}
-            </div>
-          </li>
-        </ul>
+            
+          </ul>
+        </div>
 
         {/* Update and Cancel Buttons */}
         {isEditMode && (
@@ -172,7 +176,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         )}
 
         {!isEditMode && (
-          <div className="flex justify-end">
+          <div className="flex justify-end pt-2 ">
             <button
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
               onClick={() => setIsEditMode(true)}
