@@ -18,6 +18,10 @@ import { useState } from "react"
 
 export const columns: ColumnDef<PokemonDto>[] = [
   {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
     accessorKey: "name",
     header: "Name",
   },
@@ -28,10 +32,6 @@ export const columns: ColumnDef<PokemonDto>[] = [
   {
     accessorKey: "height",
     header: "Height",
-  },
-  {
-    accessorFn: (p) => p.types[0].name,
-    header: "Primary Type",
   },
   {
     id: "actions",

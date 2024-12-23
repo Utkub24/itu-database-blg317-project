@@ -14,25 +14,25 @@ const PokemonService = {
       return response.data.map(
         (pokemon: any) =>
           new PokemonDto(
-            pokemon.id,
+            pokemon.pokemon_id,
             pokemon.name,
             pokemon.weight,
             pokemon.height,
-            pokemon.types.map((type: any) => new TypeDto(type.id, type.name)),
-            pokemon.moves.map(
-              (move: any) =>
-                new MoveDto(
-                  move.id,
-                  move.name,
-                  move.power,
-                  move.accuracy,
-                  move.pp,
-                  new TypeDto(move.type.id, move.type.name)
-                )
-            ),
-            pokemon.abilities.map(
-              (ability: any) => new AbilityDto(ability.id, ability.name)
-            )
+            //pokemon.types.map((type: any) => new TypeDto(type.id, type.name)),
+            //pokemon.moves.map(
+            //  (move: any) =>
+            //    new MoveDto(
+            //      move.id,
+            //      move.name,
+            //      move.power,
+            //      move.accuracy,
+            //      move.pp,
+            //      new TypeDto(move.type.id, move.type.name)
+            //    )
+            //),
+            //pokemon.abilities.map(
+            //  (ability: any) => new AbilityDto(ability.id, ability.name)
+            //)
           )
       );
     }),
@@ -42,7 +42,7 @@ const PokemonService = {
       const response = await axios.get(`${API_BASE_URL}/pokemon/${pokemonId}`);
       const pokemon = response.data;
       return new PokemonDto(
-        pokemon.id,
+        pokemon.pokemon_id,
         pokemon.name,
         pokemon.weight,
         pokemon.height,
@@ -86,7 +86,7 @@ const PokemonService = {
       return response.data.map(
         (pokemon: any) =>
           new PokemonDto(
-            pokemon.id,
+            pokemon.pokemon_id,
             pokemon.name,
             pokemon.weight,
             pokemon.height,

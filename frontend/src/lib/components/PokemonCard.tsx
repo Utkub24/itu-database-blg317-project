@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PokemonDto from "../dto/Pokemon.dto";
 import MoveCard from "./MoveCard";
+import PokemonService from "../services/PokemonService";
 
 interface PokemonCardProps {
   isOpen: boolean;
@@ -15,11 +16,32 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   pokemon,
   updatePokemon,
 }) => {
+  const [renderPokemon, setRenderPokemon] = useState({ ...pokemon });
   const [editedPokemon, setEditedPokemon] = useState({ ...pokemon });
   const [isEditMode, setIsEditMode] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
 
   if (!isOpen) return null;
+
+  useEffect(() => {
+    let hasFetched = false;
+
+    const fetchData = async () => {
+      if (hasFetched) return;
+
+      try {
+        // fetch full pokemon data
+        const fullPokemon = await PokemonService.getPokemonById(pokemon.id);
+        setRenderPokemon(fullPokemon)
+      } catch (error: any) {
+        console.error("Error fetching data", error)
+      }
+
+      hasFetched = true;
+    };
+
+    fetchData();
+  }, [])
 
   const handleChange = (field: keyof PokemonDto, value: string | number) => {
     setEditedPokemon({ ...editedPokemon, [field]: value });
@@ -64,12 +86,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                 <input
                   type="text"
                   maxLength={40}
-                  value={editedPokemon.name}
+                  value={renderPokemon.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                   className="border rounded-md p-1 text-sm w-2/3"
                 />
               ) : (
-                <span>{pokemon.name}</span>
+                <span>{renderPokemon.name}</span>
               )}
             </li>
 
@@ -87,7 +109,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                   className="border rounded-md p-1 text-sm w-2/3"
                 />
               ) : (
-                <span>{pokemon.weight}</span>
+                <span>{renderPokemon.weight}</span>
               )}
             </li>
 
@@ -105,7 +127,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                   className="border rounded-md p-1 text-sm w-2/3"
                 />
               ) : (
-                <span>{pokemon.height}</span>
+                <span>{renderPokemon.height}</span>
               )}
             </li>
 
@@ -113,7 +135,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Types:</span>
               <div className="flex flex-wrap gap-2">
-                {(pokemon.types || []).map((type, index) => (
+                {(renderPokemon.types || []).map((type, index) => (
                   <span
                     key={index}
                     className="bg-gray-200 px-2 py-1 rounded-md text-sm"
@@ -128,7 +150,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Abilities:</span>
               <div className="flex flex-wrap gap-2">
-                {(pokemon.abilities || []).map((ability, index) => (
+                {(renderPokemon.abilities || []).map((ability, index) => (
                   <span
                     key={index}
                     className="bg-gray-200 px-2 py-1 rounded-md text-sm"
@@ -143,7 +165,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Moves:</span>
               <div className="space-y-2">
-                {(pokemon.moves || []).map((move) => (
+                {(renderPokemon.moves || []).map((move) => (
                   <MoveCard key={move.id} move={move} />
                 ))}
               </div>
@@ -163,7 +185,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <button
               className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
               onClick={() => {
-                setEditedPokemon({ ...pokemon });
+                setEditedPokemon({ ...renderPokemon });
                 setIsEditMode(false);
                 setIsDirty(false);
               }}
