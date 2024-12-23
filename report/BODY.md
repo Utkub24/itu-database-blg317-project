@@ -33,12 +33,16 @@ The web app is built with the following stack:
 
 ### ability/:
   - all                   : returns all rows from the ABILITY table.
+
     `SELECT * FROM ability;`
 
   - from_pokemon          : returns the abilities which a specific pokemon has.
-    `SELECT ability.ability_id, ability.name
-     FROM ability JOIN pokemon_abilities ON ability.ability_id = pokemon_abilities.ability_id
-     WHERE pokemon_abilities.pokemon_id = $1;`
+
+
+      SELECT ability.ability_id, ability.name
+      FROM ability JOIN pokemon_abilities ON ability.ability_id = pokemon_abilities.ability_id
+      WHERE pokemon_abilities.pokemon_id = $1;
+
 
   - new                   : creates a new relation in the POKEMON_ABILITY table from the pokemon ID, ability ID and is hidden values.
     `INSERT INTO pokemon_abilities
