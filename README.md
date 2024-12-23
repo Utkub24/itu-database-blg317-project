@@ -5,74 +5,63 @@ For ITU BLG317E Database Systems Course by **H**üseyin **E**rtuğrul **A**rif *
 
 ```mermaid
 erDiagram
+    POKEMON ||--o{ POKEMON_TYPES : has
     POKEMON {
         int pokemon_id PK
-        string name
-        int base_hp
-        int base_attack
-        int base_defense
-        int base_sp_attack
-        int base_sp_defense
-        int base_speed
-        int weight
+        varchar name
         int height
-        boolean is_legendary
-        string description
+        int weight
     }
-
+    
+    TYPE ||--o{ POKEMON_TYPES : belongs_to
     TYPE {
         int type_id PK
-        string type_name
+        varchar type_name
     }
-
+    
     POKEMON_TYPES {
-        int pokemon_id PK, FK
-        int type_id PK, FK
+        int pokemon_id PK,FK
+        int type_id PK,FK
         boolean is_primary
     }
-
+    
+    POKEMON ||--o{ POKEMON_MOVES : learns
+    MOVE ||--o{ POKEMON_MOVES : learned_by
+    POKEMON_MOVES {
+        int pokemon_id PK,FK
+        int move_id PK,FK
+        int learn_level
+    }
+    
     MOVE {
         int move_id PK
-        string name
+        varchar name
         int power
         int accuracy
         int pp
-        string effect_description
         int type_id FK
     }
-
-    POKEMON_MOVES {
-        int pokemon_id PK, FK
-        int move_id PK, FK
-        string learn_method
-        int learn_level
-    }
-
-    ABILITY {
-        int ability_id PK
-        string name
-        string effect_description
-    }
-
+    
+    TYPE ||--o{ MOVE : has
+    
+    POKEMON ||--o{ POKEMON_ABILITIES : has
+    ABILITY ||--o{ POKEMON_ABILITIES : belongs_to
     POKEMON_ABILITIES {
-        int pokemon_id PK, FK
-        int ability_id PK, FK
+        int pokemon_id PK,FK
+        int ability_id PK,FK
         boolean is_hidden
     }
-
-    TYPE_EFFECTIVENESS {
-        int attacking_type_id PK, FK
-        int defending_type_id PK, FK
-        float multiplier
+    
+    ABILITY {
+        int ability_id PK
+        varchar name
     }
-
-    POKEMON ||--o{ POKEMON_TYPES : "has"
-    TYPE ||--o{ POKEMON_TYPES : "belongs_to"
-    POKEMON ||--o{ POKEMON_MOVES : "learns"
-    MOVE ||--o{ POKEMON_MOVES : "learned_by"
-    POKEMON ||--o{ POKEMON_ABILITIES : "has"
-    ABILITY ||--o{ POKEMON_ABILITIES : "belongs_to"
-    TYPE ||--o{ TYPE_EFFECTIVENESS : "attacking"
-    TYPE ||--o{ TYPE_EFFECTIVENESS : "defending"
-    TYPE ||--o{ MOVE : "has"
+    
+    TYPE ||--o{ TYPE_EFFECTIVENESS : attacks
+    TYPE ||--o{ TYPE_EFFECTIVENESS : defends
+    TYPE_EFFECTIVENESS {
+        int attacking_type_id PK,FK
+        int defending_type_id PK,FK
+        numeric multiplier
+    }
 ```
