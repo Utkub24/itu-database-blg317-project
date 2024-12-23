@@ -1,1 +1,1 @@
-UPDATE pokemon SET (name = $1, height = $1, weight = $1) WHERE pokemon_id = $1;
+UPDATE pokemon SET (name = $2, height = $3, weight = $4) WHERE pokemon_id = $1;
