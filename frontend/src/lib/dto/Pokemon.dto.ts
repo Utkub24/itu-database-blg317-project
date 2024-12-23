@@ -7,11 +7,11 @@ export default class PokemonDto {
   name: string;
   weight: number;
   height: number;
-  types: [TypeDto];
-  moves: [MoveDto];
-  abilities: [AbilityDto];
+  types: TypeDto[];
+  moves: MoveDto[];
+  abilities: AbilityDto[];
 
-  constructor(id: number = 1, name: string = "Unknown Pokemon", weight: number = 1, height: number = 1, types: [TypeDto] = [new TypeDto()], moves: [MoveDto] = [new MoveDto()], abilities: [AbilityDto] = [new AbilityDto()]) {
+  constructor(id: number = 1, name: string = "Unknown Pokemon", weight: number = 1, height: number = 1, types: TypeDto[] = [new TypeDto()], moves: MoveDto[] = [new MoveDto()], abilities: AbilityDto[] = [new AbilityDto()]) {
     this.id = id;
     this.name = name;
     this.weight = weight;
