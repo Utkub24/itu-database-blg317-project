@@ -3,12 +3,16 @@
 ### Utku Biçer
 - Frontend
 - Data Research
+- SQL Queries
 
 ### Ertuğrul Şentürk
 - Backend
+- Data Research
+- SQL Queries
 
 ### Hüseyin Şimşek
 - SQL Queries
+- Backend
 
 ### Muhammed Arif Göktürk
 - Frontend
