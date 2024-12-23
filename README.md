@@ -104,3 +104,4 @@ The endpoint are as follows:
 
 - `/type-effectiveness/all`:
     - `GET`: Returns all the type effectivenesses in the database.
+pokemon_idPKstringnameintbase_hpintbase_attackintbase_defenseintbase_sp_attackintbase_sp_defenseintbase_speedintweightintheightbooleanis_legendarystringdescription
