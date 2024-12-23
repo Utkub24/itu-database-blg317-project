@@ -24,11 +24,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   if (!isOpen) return null;
 
   useEffect(() => {
-    let hasFetched = false;
-
     const fetchData = async () => {
-      if (hasFetched) return;
-
       try {
         // fetch full pokemon data
         const fullPokemon = await PokemonService.getPokemonById(pokemon.id);
@@ -37,7 +33,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         console.error("Error fetching data", error)
       }
 
-      hasFetched = true;
     };
 
     fetchData();
@@ -86,7 +81,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                 <input
                   type="text"
                   maxLength={40}
-                  value={renderPokemon.name}
+                  value={editedPokemon.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                   className="border rounded-md p-1 text-sm w-2/3"
                 />

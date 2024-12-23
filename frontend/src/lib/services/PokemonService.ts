@@ -135,8 +135,9 @@ const PokemonService = {
   getAllAbilities: async (): Promise<AbilityDto[]> =>
     handleRequest(async () => {
       const response = await axios.get(`${API_BASE_URL}/ability/all`);
+      console.log(response.data)
       return response.data.map(
-        (ability: any) => new AbilityDto(ability.id, ability.name)
+        (ability: any) => new AbilityDto(ability.ability_id, ability.name)
       );
     }),
 };
