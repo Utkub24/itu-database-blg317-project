@@ -3,6 +3,7 @@ import MoveDto from "./Move.dto";
 import TypeDto from "./Type.dto";
 
 export default class PokemonDto {
+  id: number;
   name: string;
   weight: number;
   height: number;
@@ -10,7 +11,8 @@ export default class PokemonDto {
   moves: [MoveDto];
   abilities: [AbilityDto];
 
-  constructor(name: string = "Unknown Pokemon", weight: number = 1, height: number = 1, types: [TypeDto] = [new TypeDto()], moves: [MoveDto] = [new MoveDto()], abilities: [AbilityDto] = [new AbilityDto()]) {
+  constructor(id: number = 1, name: string = "Unknown Pokemon", weight: number = 1, height: number = 1, types: [TypeDto] = [new TypeDto()], moves: [MoveDto] = [new MoveDto()], abilities: [AbilityDto] = [new AbilityDto()]) {
+    this.id = id;
     this.name = name;
     this.weight = weight;
     this.height = height;
