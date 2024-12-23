@@ -1,1 +1,1 @@
-select * from type_effectiveness where defending_type_id = $1;
+SELECT * FROM type_effectiveness WHERE defending_type_id = $1;

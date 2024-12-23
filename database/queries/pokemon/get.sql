@@ -1,1 +1,1 @@
-select * from pokemon where pokemon_moves.move_id = $1;
+SELECT * FROM pokemon WHERE pokemon_moves.move_id = $1;

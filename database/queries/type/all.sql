@@ -1,1 +1,1 @@
-select * from type;
+SELECT * FROM type;

@@ -1,1 +1,1 @@
-select * from pokemon;
+SELECT * FROM pokemon;

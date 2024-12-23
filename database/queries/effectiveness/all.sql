@@ -1,1 +1,1 @@
-select * from type_effectiveness;
+SELECT * FROM type_effectiveness;

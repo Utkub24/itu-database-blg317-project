@@ -1,1 +1,1 @@
-select * from ability;
+SELECT * FROM ability;

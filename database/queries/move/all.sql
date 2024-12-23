@@ -1,1 +1,1 @@
-select * from move;
+SELECT * FROM move;
