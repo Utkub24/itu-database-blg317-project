@@ -1,4 +1,4 @@
-id,identifier,generation_id,type_id,power,pp,accuracy,priority,target_id,damage_class_id,effect_id,effect_chance,contest_type_id,contest_effect_id,super_contest_effect_id
+move_id,name,generation_id,type_id,power,pp,accuracy,priority,target_id,damage_class_id,effect_id,effect_chance,contest_type_id,contest_effect_id,super_contest_effect_id
 1,pound,1,1,40,35,100,0,10,2,1,,5,1,5
 2,karate-chop,1,2,50,25,100,0,10,2,44,,5,2,5
 3,double-slap,1,1,15,10,85,0,10,2,30,,5,10,7
@@ -918,21 +918,3 @@ id,identifier,generation_id,type_id,power,pp,accuracy,priority,target_id,damage_
 917,psychic-noise,9,14,75,10,100,0,10,3,,,,,
 918,upper-hand,9,2,65,15,100,3,10,2,,,,,
 919,malignant-chain,9,4,100,5,100,0,10,3,,,,,
-10001,shadow-rush,3,10002,55,,100,0,10,2,10001,,,,
-10002,shadow-blast,3,10002,80,,100,0,10,2,44,,,,
-10003,shadow-blitz,3,10002,40,,100,0,10,2,1,,,,
-10004,shadow-bolt,3,10002,75,,100,0,10,3,7,10,,,
-10005,shadow-break,3,10002,75,,100,0,10,2,1,,,,
-10006,shadow-chill,3,10002,75,,100,0,10,3,6,10,,,
-10007,shadow-end,3,10002,120,,60,0,10,2,10002,,,,
-10008,shadow-fire,3,10002,75,,100,0,10,3,5,10,,,
-10009,shadow-rave,3,10002,70,,100,0,6,3,1,,,,
-10010,shadow-storm,3,10002,95,,100,0,6,3,1,,,,
-10011,shadow-wave,3,10002,50,,100,0,6,3,1,,,,
-10012,shadow-down,3,10002,,,100,0,6,1,60,,,,
-10013,shadow-half,3,10002,,,100,0,12,3,10003,,,,
-10014,shadow-hold,3,10002,,,,0,6,1,107,,,,
-10015,shadow-mist,3,10002,,,100,0,6,1,10004,,,,
-10016,shadow-panic,3,10002,,,90,0,6,1,50,,,,
-10017,shadow-shed,3,10002,,,,0,12,1,10005,,,,
-10018,shadow-sky,3,10002,,,,0,12,1,10006,,,,

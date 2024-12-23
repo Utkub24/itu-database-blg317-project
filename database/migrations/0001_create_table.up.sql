@@ -8,16 +8,8 @@ CREATE TABLE TYPE (
 CREATE TABLE POKEMON (
     pokemon_id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
-    base_hp INTEGER NOT NULL CHECK (base_hp >= 0),
-    base_attack INTEGER NOT NULL CHECK (base_attack >= 0),
-    base_defense INTEGER NOT NULL CHECK (base_defense >= 0),
-    base_sp_attack INTEGER NOT NULL CHECK (base_sp_attack >= 0),
-    base_sp_defense INTEGER NOT NULL CHECK (base_sp_defense >= 0),
-    base_speed INTEGER NOT NULL CHECK (base_speed >= 0),
-    weight INTEGER NOT NULL CHECK (weight >= 0),
     height INTEGER NOT NULL CHECK (height >= 0),
-    is_legendary BOOLEAN NOT NULL DEFAULT FALSE,
-    description TEXT NOT NULL
+    weight INTEGER NOT NULL CHECK (weight >= 0)
 );
 
 -- Create POKEMON_TYPES junction table
@@ -36,9 +28,8 @@ CREATE TABLE MOVE (
     name VARCHAR(50) NOT NULL UNIQUE,
     power INTEGER CHECK (power >= 0),
     accuracy INTEGER CHECK (accuracy >= 0 AND accuracy <= 100),
-    pp INTEGER NOT NULL CHECK (pp >= 0),
-    effect_description TEXT,
-    type_id INTEGER NOT NULL,
+    pp INTEGER CHECK (pp >= 0),
+    type_id INTEGER,
     FOREIGN KEY (type_id) REFERENCES TYPE(type_id) ON DELETE CASCADE
 );
 
@@ -46,7 +37,6 @@ CREATE TABLE MOVE (
 CREATE TABLE POKEMON_MOVES (
     pokemon_id INTEGER,
     move_id INTEGER,
-    learn_method VARCHAR(20) NOT NULL CHECK (learn_method IN ('level-up', 'tm', 'egg', 'tutor')),
     learn_level INTEGER CHECK (learn_level >= 0),
     PRIMARY KEY (pokemon_id, move_id),
     FOREIGN KEY (pokemon_id) REFERENCES POKEMON(pokemon_id) ON DELETE CASCADE,
@@ -56,8 +46,7 @@ CREATE TABLE POKEMON_MOVES (
 -- Create ABILITY table
 CREATE TABLE ABILITY (
     ability_id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE,
-    effect_description TEXT NOT NULL
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Create POKEMON_ABILITIES junction table
