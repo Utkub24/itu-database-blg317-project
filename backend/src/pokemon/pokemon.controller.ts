@@ -1,12 +1,13 @@
-import { Controller, Get, Post, Put, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
+import PokemonDto from 'src/dto/Pokemon.dto';
 
 @Controller('pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
   @Get('all')
-  async getAllPokemon() {
+  async getAllPokemon(): Promise<PokemonDto[]> {
     try {
       return await this.pokemonService.getAllPokemon();
     }
@@ -16,19 +17,20 @@ export class PokemonController {
   }
 
   @Get(':id')
-  async getPokemonById(@Param('id') id: string) {
+  async getPokemonById(@Param('id') id: string): Promise<PokemonDto> {
     try {
       return await this.pokemonService.getPokemonById(id);
     }
     catch (error) {
+      console.log(error);
       return error;
     }
   }
 
   @Post()
-  async createPokemon() {
+  async createPokemon(@Body() pokemonDto: any): Promise<any> {
     try {
-      return await this.pokemonService.createPokemon();
+      return await this.pokemonService.createPokemon(pokemonDto);
     }
     catch (error) {
       return error;
@@ -36,7 +38,7 @@ export class PokemonController {
   }
 
   @Put(':id')
-  async updatePokemon(@Param('id') id: string) {
+  async updatePokemon(@Body() pokemonDto: any, @Param('id') id: string): Promise<void> {
     try {
       return await this.pokemonService.updatePokemon(id);
     }
@@ -46,19 +48,9 @@ export class PokemonController {
   }
 
   @Delete(':id')
-  async deletePokemon(@Param('id') id: string) {
+  async deletePokemon(@Param('id') id: string): Promise<void> {
     try {
       return await this.pokemonService.deletePokemon(id);
-    }
-    catch (error) {
-      return error;
-    }
-  }
-
-  @Get('random')
-  async getRandomPokemon() {
-    try {
-      return await this.pokemonService.getRandomPokemon();
     }
     catch (error) {
       return error;

@@ -10,12 +10,12 @@ export class PokemonService {
 
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async getAllPokemon() {
+  async getAllPokemon(): Promise<PokemonDto[]> {
     const query = 'select * from pokemon;';
     return await this.databaseService.query(query).then(res => res.rows);
   }
 
-  async getPokemonById(id: string) {
+  async getPokemonById(id: string): Promise<PokemonDto> {
     const pokemon_query = 'select * from pokemon where pokemon_id = $1;';
     const pokemon = await this.databaseService.query(pokemon_query, [id]).then(res => res.rows);
 
@@ -40,23 +40,39 @@ export class PokemonService {
     return pokemonDto;
   }
 
-  async createPokemon() {
-    const query = '';
-    return await this.databaseService.query(query);
+  async createPokemon(pokemonDto: any): Promise<any> {
+    const pokemon_query = 'insert into pokemon (name, weight, height) values ($1, $2, $3, $4);';
+    const pokemon = await this.databaseService.query(
+      pokemon_query, 
+      [pokemonDto.id, pokemonDto.name, pokemonDto.weight, pokemonDto.height]
+    );
+    const pokemon_id = pokemon.rows[0].pokemon_id;
+
+    const moves_query = 'INSERT INTO pokemon_moves VALUES ($1, $2, $3);';
+    for (const move of pokemonDto.moves) {
+      await this.databaseService.query(moves_query, [pokemon_id, move.move_id, move.name]);
+    }
+
+    const abilities_query = 'INSERT INTO pokemon_abilities VALUES ($1, $2, $3);';
+    for (const ability of pokemonDto.abilities) {
+      await this.databaseService.query(abilities_query, [pokemon_id, ability.ability_id, ability.name]);
+    }
+
+    const types_query = 'INSERT INTO pokemon_types VALUES ($1, $2, $3);';
+    for (const type of pokemonDto.types) {
+      await this.databaseService.query(types_query, [pokemon_id, type.type_id, type.type_name]);
+    }
+
+    return {pokemonId: pokemon_id};
   }
 
-  async updatePokemon(id: string) {
-    const query = '';
-    return await this.databaseService.query(query, [id]);
+  async updatePokemon(id: string): Promise<void> {
+    const query = 'update pokemon set (name = $1, height = $1, weight = $1) where pokemon_id = $1;';
+    await this.databaseService.query(query, [id]);
   }
 
-  async deletePokemon(id: string) {
+  async deletePokemon(id: string): Promise<void> {
     const query = '';
-    return await this.databaseService.query(query, [id]);
-  }
-
-  async getRandomPokemon() {
-    const query = '';
-    return await this.databaseService.query(query);
+    await this.databaseService.query(query, [id]);
   }
 }
