@@ -68,8 +68,8 @@ const App = () => {
 
   const handleCreatePokemon = async (newPokemon: PokemonDto) => {
     try {
-      const pokemon = await PokemonService.addPokemon(newPokemon); // Geçersiz ID
-
+      const pokemonId = await PokemonService.addPokemon(newPokemon); // Geçersiz ID
+      newPokemon.id = pokemonId
       setPokemonData((prevData) => [...prevData, newPokemon]);
 
       console.log(newPokemon);
