@@ -5,7 +5,7 @@ import TypeDto from "../dto/Type.dto";
 import MoveDto from "../dto/Move.dto";
 import AbilityDto from "../dto/Ability.dto";
 
-const API_BASE_URL = "https://your-backend-api.com";
+const API_BASE_URL = "http://localhost:3000";
 
 const PokemonService = {
   getAllPokemons: async (): Promise<PokemonDto[]> =>
