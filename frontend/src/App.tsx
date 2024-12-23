@@ -63,7 +63,7 @@ const App = () => {
 
 
 
-  const handleCreatePokemon = async(newPokemon: PokemonDto) => {
+  const handleCreatePokemon = async (newPokemon: PokemonDto) => {
     try {
       const pokemon = await PokemonService.addPokemon(newPokemon); // Geçersiz ID
 
@@ -73,7 +73,20 @@ const App = () => {
     } catch (error: any) {
       console.error("Error fetching Pokémon:", error.message);
     }
-    
+
+  };
+
+  const handleDeletePokemon = async (pokemon: PokemonDto) => {
+    try {
+      //const res = await PokemonService.deletePokemon(pokemon.id); // Geçersiz ID
+
+      setPokemonData((prevData) => prevData.filter((p) => p.id !== pokemon.id));
+
+      //console.log(res);
+    } catch (error: any) {
+      console.error("Error deleting Pokémon:", error.message);
+    }
+
   };
 
   return (
@@ -81,7 +94,7 @@ const App = () => {
       <Header />
       <main className="p-4">
         <div className="p-4 bg-gray-50 min-h-screen flex flex-col justify-center">
-          <DataTable columns={columns} data={pokemonData} onUpdate={handlePokemonUpdate} />
+          <DataTable columns={columns} data={pokemonData} onUpdate={handlePokemonUpdate} onDelete={handleDeletePokemon} />
           <div className="mt-4">
             <button
               className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"

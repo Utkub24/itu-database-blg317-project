@@ -43,6 +43,10 @@ export const columns: ColumnDef<PokemonDto>[] = [
         table.options.meta?.onUpdate?.(pokemon, updatedPokemon);
       };
 
+      const handleDelete = (pokemon: PokemonDto) => {
+        table.options.meta?.onDelete?.(pokemon);
+      };
+
       return (
         <>
           <DropdownMenu>
@@ -62,6 +66,10 @@ export const columns: ColumnDef<PokemonDto>[] = [
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setModalOpen(true)}>
                 View Pokemon
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleDelete(pokemon)}>
+                Delete Pokemon
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

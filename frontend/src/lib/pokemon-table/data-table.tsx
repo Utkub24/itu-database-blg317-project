@@ -25,13 +25,15 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   onUpdate,
-}: DataTableProps<TData, TValue> & { onUpdate?: (oldData: TData, newData: TData) => void }) {
+  onDelete,
+}: DataTableProps<TData, TValue> & { onUpdate?: (oldData: TData, newData: TData) => void } & { onDelete?: (data: TData) => void }) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     meta: {
       onUpdate,
+      onDelete,
     },
   });
 
@@ -46,9 +48,9 @@ export function DataTable<TData, TValue>({
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                 </TableHead>
               ))}
             </TableRow>
