@@ -4,10 +4,11 @@ import TypeDto from "./lib/dto/Type.dto";
 import MoveDto from "./lib/dto/Move.dto";
 import AbilityDto from "./lib/dto/Ability.dto";
 import PokemonCard from "./lib/components/PokemonCard";
+import { DataTable } from "./lib/pokemon-table/data-table";
+
+import { columns } from "@/lib/pokemon-table/columns"
 
 const App = () => {
-  const [isModalOpen, setModalOpen] = useState(true);
-
   const examplePokemon = new PokemonDto(
     25,
     "Pikachu",
@@ -21,26 +22,20 @@ const App = () => {
     [new AbilityDto(1, "Static"), new AbilityDto(2, "Lightning Rod")]
   );
 
-  const updatePokemon = (updatedPokemon: PokemonDto) => {
-    console.log("Updated Pokémon:", updatedPokemon);
-    setModalOpen(false);
+  const pokemonData = [examplePokemon, new PokemonDto()];
+
+  const handlePokemonUpdate = (oldPokemon: PokemonDto, newPokemon: PokemonDto) => {
+
   };
 
   return (
-    <div className="p-4 bg-gray-50 min-h-screen flex items-center justify-center">
+    <div className="p-4 bg-gray-50 min-h-screen flex flex-col justify-center">
+      <DataTable columns={columns} data={pokemonData} onUpdate={handlePokemonUpdate} />
       <button
         className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        onClick={() => setModalOpen(true)}
       >
         Edit Pokémon
       </button>
-
-      <PokemonCard
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        pokemon={examplePokemon}
-        updatePokemon={updatePokemon}
-      />
     </div>
   );
 };
