@@ -108,6 +108,21 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             )}
           </li>
 
+          {/* Types */}
+          <li className="flex flex-col text-gray-700">
+            <span className="font-medium mb-1">Types:</span>
+            <div className="flex flex-wrap gap-2">
+              {pokemon.types.map((type, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-200 px-2 py-1 rounded-md text-sm"
+                >
+                  {type.name}
+                </span>
+              ))}
+            </div>
+          </li>
+
           {/* Moves */}
           <li className="flex flex-col text-gray-700">
             <span className="font-medium mb-1">Moves:</span>
