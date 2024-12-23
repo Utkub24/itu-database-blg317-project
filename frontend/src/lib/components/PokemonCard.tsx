@@ -113,7 +113,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Types:</span>
               <div className="flex flex-wrap gap-2">
-                {pokemon.types.map((type, index) => (
+                {(pokemon.types || []).map((type, index) => (
                   <span
                     key={index}
                     className="bg-gray-200 px-2 py-1 rounded-md text-sm"
@@ -124,11 +124,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
               </div>
             </li>
 
-                {/* Abilities */}
+            {/* Abilities */}
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Abilities:</span>
               <div className="flex flex-wrap gap-2">
-                {pokemon.abilities.map((ability, index) => (
+                {(pokemon.abilities || []).map((ability, index) => (
                   <span
                     key={index}
                     className="bg-gray-200 px-2 py-1 rounded-md text-sm"
@@ -138,18 +138,16 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                 ))}
               </div>
             </li>
-            
+
             {/* Moves */}
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Moves:</span>
               <div className="space-y-2">
-                {pokemon.moves.map((move) => (
+                {(pokemon.moves || []).map((move) => (
                   <MoveCard key={move.id} move={move} />
                 ))}
               </div>
             </li>
-
-            
           </ul>
         </div>
 
@@ -176,7 +174,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         )}
 
         {!isEditMode && (
-          <div className="flex justify-end pt-2 ">
+          <div className="flex justify-end pt-2">
             <button
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
               onClick={() => setIsEditMode(true)}

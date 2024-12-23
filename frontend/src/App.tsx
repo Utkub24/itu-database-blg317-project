@@ -3,7 +3,6 @@ import PokemonDto from "./lib/dto/Pokemon.dto";
 import TypeDto from "./lib/dto/Type.dto";
 import MoveDto from "./lib/dto/Move.dto";
 import AbilityDto from "./lib/dto/Ability.dto";
-import PokemonCard from "./lib/components/PokemonCard";
 import { DataTable } from "./lib/pokemon-table/data-table";
 import { columns } from "@/lib/pokemon-table/columns"
 import Header from "./lib/components/Header";
@@ -101,6 +100,38 @@ const App = () => {
     new TypeDto(3, "Fire"),
   ]);
 
+
+  useEffect(() => {
+    let hasFetched = false; // Flag to ensure fetch runs only once
+
+    const fetchData = async () => {
+      if (hasFetched) return; // Prevent multiple calls
+
+      hasFetched = true; // Mark as fetched
+
+      try {
+        // Fetch all Pokémon
+        const pokemons = await PokemonService.getAllPokemons();
+        setPokemonData(pokemons);
+
+        // Fetch abilities
+        const abilities = await PokemonService.getAllAbilities();
+        setAbilitiesList(abilities);
+
+        // Fetch moves
+        const moves = await PokemonService.getAllMoves();
+        setMovesList(moves);
+
+        // Fetch types
+        const types = await PokemonService.getAllTypes();
+        setTypesList(types);
+      } catch (error: any) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures useEffect runs only once
 
   const handlePokemonUpdate = async (oldPokemon: PokemonDto, newPokemon: PokemonDto) => {
     try {

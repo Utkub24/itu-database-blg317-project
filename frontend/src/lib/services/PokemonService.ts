@@ -1,67 +1,143 @@
 import axios from "axios";
 import { handleRequest } from "./RequestHandler";
+import PokemonDto from "../dto/Pokemon.dto";
+import TypeDto from "../dto/Type.dto";
+import MoveDto from "../dto/Move.dto";
+import AbilityDto from "../dto/Ability.dto";
 
 const API_BASE_URL = "https://your-backend-api.com";
 
 const PokemonService = {
-    getAllPokemons: async () =>
-        handleRequest(() => axios.get(`${API_BASE_URL}/pokemon/all`)),
+  getAllPokemons: async (): Promise<PokemonDto[]> =>
+    handleRequest(async () => {
+      const response = await axios.get(`${API_BASE_URL}/pokemon/all`);
+      return response.data.map(
+        (pokemon: any) =>
+          new PokemonDto(
+            pokemon.id,
+            pokemon.name,
+            pokemon.weight,
+            pokemon.height,
+            pokemon.types.map((type: any) => new TypeDto(type.id, type.name)),
+            pokemon.moves.map(
+              (move: any) =>
+                new MoveDto(
+                  move.id,
+                  move.name,
+                  move.power,
+                  move.accuracy,
+                  move.pp,
+                  new TypeDto(move.type.id, move.type.name)
+                )
+            ),
+            pokemon.abilities.map(
+              (ability: any) => new AbilityDto(ability.id, ability.name)
+            )
+          )
+      );
+    }),
 
-    getPokemonById: async (pokemonId: number) =>
-        handleRequest(() =>
-            axios.get(`${API_BASE_URL}/pokemon/${pokemonId}`)
+  getPokemonById: async (pokemonId: number): Promise<PokemonDto> =>
+    handleRequest(async () => {
+      const response = await axios.get(`${API_BASE_URL}/pokemon/${pokemonId}`);
+      const pokemon = response.data;
+      return new PokemonDto(
+        pokemon.id,
+        pokemon.name,
+        pokemon.weight,
+        pokemon.height,
+        pokemon.types.map((type: any) => new TypeDto(type.id, type.name)),
+        pokemon.moves.map(
+          (move: any) =>
+            new MoveDto(
+              move.id,
+              move.name,
+              move.power,
+              move.accuracy,
+              move.pp,
+              new TypeDto(move.type.id, move.type.name)
+            )
         ),
+        pokemon.abilities.map(
+          (ability: any) => new AbilityDto(ability.id, ability.name)
+        )
+      );
+    }),
 
-    addPokemon: async (newPokemon: any) =>
-        handleRequest(async () => {
-            const response = await axios.post(`${API_BASE_URL}/pokemon`, newPokemon);
-            const pokemonId = response.data.pokemonId; // API'nin döndürdüğü id'yi alıyoruz
-            return pokemonId; // pokemonId'yi return ediyoruz}
-        }),
+  addPokemon: async (newPokemon: PokemonDto): Promise<number> =>
+    handleRequest(async () => {
+      const response = await axios.post(`${API_BASE_URL}/pokemon`, newPokemon);
+      return response.data.pokemonId; // pokemonId'yi return ediyoruz
+    }),
 
-    updatePokemon: async (pokemonId: number, updatedPokemon: any) =>
-        handleRequest(() =>
-            axios.put(`${API_BASE_URL}/pokemon/${pokemonId}`, updatedPokemon)
-        ),
+  updatePokemon: async (pokemonId: number, updatedPokemon: PokemonDto) =>
+    handleRequest(() =>
+      axios.put(`${API_BASE_URL}/pokemon/${pokemonId}`, updatedPokemon)
+    ),
 
-    deletePokemon: async (pokemonId: number) =>
-        handleRequest(() =>
-            axios.delete(`${API_BASE_URL}/pokemon/${pokemonId}`)
-        ),
+  deletePokemon: async (pokemonId: number) =>
+    handleRequest(() =>
+      axios.delete(`${API_BASE_URL}/pokemon/${pokemonId}`)
+    ),
 
-    getPokemonsByType: async (typeId: number) =>
-        handleRequest(() =>
-            axios.get(`${API_BASE_URL}/pokemon/type/${typeId}`)
-        ),
+  getPokemonsByType: async (typeId: number): Promise<PokemonDto[]> =>
+    handleRequest(async () => {
+      const response = await axios.get(`${API_BASE_URL}/pokemon/type/${typeId}`);
+      return response.data.map(
+        (pokemon: any) =>
+          new PokemonDto(
+            pokemon.id,
+            pokemon.name,
+            pokemon.weight,
+            pokemon.height,
+            pokemon.types.map((type: any) => new TypeDto(type.id, type.name)),
+            pokemon.moves.map(
+              (move: any) =>
+                new MoveDto(
+                  move.id,
+                  move.name,
+                  move.power,
+                  move.accuracy,
+                  move.pp,
+                  new TypeDto(move.type.id, move.type.name)
+                )
+            ),
+            pokemon.abilities.map(
+              (ability: any) => new AbilityDto(ability.id, ability.name)
+            )
+          )
+      );
+    }),
 
-    getPokemonsByMove: async (moveId: number) =>
-        handleRequest(() =>
-            axios.get(`${API_BASE_URL}/pokemon/move/${moveId}`)
-        ),
+  getAllTypes: async (): Promise<TypeDto[]> =>
+    handleRequest(async () => {
+      const response = await axios.get(`${API_BASE_URL}/type/all`);
+      return response.data.map((type: any) => new TypeDto(type.id, type.name));
+    }),
 
-    getPokemonsByAbility: async (abilityId: number) =>
-        handleRequest(() =>
-            axios.get(`${API_BASE_URL}/pokemon/ability/${abilityId}`)
-        ),
+  getAllMoves: async (): Promise<MoveDto[]> =>
+    handleRequest(async () => {
+      const response = await axios.get(`${API_BASE_URL}/move/all`);
+      return response.data.map(
+        (move: any) =>
+          new MoveDto(
+            move.id,
+            move.name,
+            move.power,
+            move.accuracy,
+            move.pp,
+            new TypeDto(move.type.id, move.type.name)
+          )
+      );
+    }),
 
-    getTypeEffectivenessByType: async (typeId: number) =>
-        handleRequest(() =>
-            axios.get(`${API_BASE_URL}/pokemon/type-effectiveness/${typeId}`)
-        ),
-
-    getAllTypes: async () =>
-        handleRequest(() => axios.get(`${API_BASE_URL}/type/all`)),
-
-    getAllMoves: async () =>
-        handleRequest(() => axios.get(`${API_BASE_URL}/move/all`)),
-
-    getAllAbilities: async () =>
-        handleRequest(() => axios.get(`${API_BASE_URL}/ability/all`)),
-
-    getAllTypeEffectivenesses: async () =>
-        handleRequest(() =>
-            axios.get(`${API_BASE_URL}/type-effectiveness/all`)
-        ),
+  getAllAbilities: async (): Promise<AbilityDto[]> =>
+    handleRequest(async () => {
+      const response = await axios.get(`${API_BASE_URL}/ability/all`);
+      return response.data.map(
+        (ability: any) => new AbilityDto(ability.id, ability.name)
+      );
+    }),
 };
 
 export default PokemonService;

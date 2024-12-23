@@ -13,9 +13,9 @@ interface PokemonCreateCardProps {
 const PokemonCreateCard: React.FC<PokemonCreateCardProps> = ({
   isOpen,
   onClose,
-  abilities,
-  moves,
-  types,
+  abilities = [],
+  moves = [],
+  types = [],
   onCreate,
 }) => {
   const [newPokemon, setNewPokemon] = useState<PokemonDto>({
@@ -117,61 +117,73 @@ const PokemonCreateCard: React.FC<PokemonCreateCardProps> = ({
             {/* Types */}
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Types:</span>
-              <div className="flex flex-wrap gap-2">
-                {types.map((type) => (
-                  <button
-                    key={type.id}
-                    onClick={() => handleSelect("types", type.id)}
-                    className={`px-2 py-1 rounded-md text-sm ${
-                      newPokemon.types.some((t) => t.id === type.id)
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200"
-                    }`}
-                  >
-                    {type.name}
-                  </button>
-                ))}
-              </div>
+              {types.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {types.map((type) => (
+                    <button
+                      key={type.id}
+                      onClick={() => handleSelect("types", type.id)}
+                      className={`px-2 py-1 rounded-md text-sm ${
+                        newPokemon.types.some((t) => t.id === type.id)
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-200"
+                      }`}
+                    >
+                      {type.name}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <span className="text-gray-500">No types available.</span>
+              )}
             </li>
 
             {/* Moves */}
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Moves:</span>
-              <div className="flex flex-wrap gap-2">
-                {moves.map((move) => (
-                  <button
-                    key={move.id}
-                    onClick={() => handleSelect("moves", move.id)}
-                    className={`px-2 py-1 rounded-md text-sm ${
-                      newPokemon.moves.some((m) => m.id === move.id)
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200"
-                    }`}
-                  >
-                    {move.name}
-                  </button>
-                ))}
-              </div>
+              {moves.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {moves.map((move) => (
+                    <button
+                      key={move.id}
+                      onClick={() => handleSelect("moves", move.id)}
+                      className={`px-2 py-1 rounded-md text-sm ${
+                        newPokemon.moves.some((m) => m.id === move.id)
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-200"
+                      }`}
+                    >
+                      {move.name}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <span className="text-gray-500">No moves available.</span>
+              )}
             </li>
 
             {/* Abilities */}
             <li className="flex flex-col text-gray-700">
               <span className="font-medium mb-1">Abilities:</span>
-              <div className="flex flex-wrap gap-2">
-                {abilities.map((ability) => (
-                  <button
-                    key={ability.id}
-                    onClick={() => handleSelect("abilities", ability.id)}
-                    className={`px-2 py-1 rounded-md text-sm ${
-                      newPokemon.abilities.some((a) => a.id === ability.id)
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200"
-                    }`}
-                  >
-                    {ability.name}
-                  </button>
-                ))}
-              </div>
+              {abilities.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {abilities.map((ability) => (
+                    <button
+                      key={ability.id}
+                      onClick={() => handleSelect("abilities", ability.id)}
+                      className={`px-2 py-1 rounded-md text-sm ${
+                        newPokemon.abilities.some((a) => a.id === ability.id)
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-200"
+                      }`}
+                    >
+                      {ability.name}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <span className="text-gray-500">No abilities available.</span>
+              )}
             </li>
           </ul>
         </div>
