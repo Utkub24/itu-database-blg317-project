@@ -19,8 +19,15 @@ export class PokemonService {
     const pokemon_query = 'select * from pokemon where pokemon_id = $1;';
     const pokemon = await this.databaseService.query(pokemon_query, [id]).then(res => res.rows);
 
-    const moves_query = 'select move.move_id, move.name from move join pokemon_moves on move.move_id = pokemon_moves.move_id where pokemon_moves.pokemon_id = $1;';
-    const moves = await this.databaseService.query(moves_query, [id]).then(res => res.rows);    
+    const move_query = 'select move.move_id, move.name, move.power, move.accuracy, move.pp, move.type_id from move join pokemon_moves on move.move_id = pokemon_moves.move_id where pokemon_moves.pokemon_id = $1;';
+    const moves = await this.databaseService.query(move_query, [id]).then(res => res.rows);
+
+    const moveDtos = [];
+    for (const move of moves) {
+      const type_query = 'select type_id, type_name from type where type_id = $1;';
+      const type = await this.databaseService.query(type_query, [move.type_id]).then(res => res.rows);
+      moveDtos.push(new MoveDto(move.move_id, move.name, move.power, move.accuracy, move.pp, new TypeDto(type[0].type_id, type[0].type_name)));
+    }
 
     const abilities_query = 'select ability.ability_id, ability.name from ability join pokemon_abilities on ability.ability_id = pokemon_abilities.ability_id where pokemon_abilities.pokemon_id = $1;';
     const abilities = await this.databaseService.query(abilities_query, [id]).then(res => res.rows);
@@ -34,7 +41,7 @@ export class PokemonService {
       pokemon[0].weight,
       pokemon[0].height,
       types.map(type => new TypeDto(type.type_id, type.type_name)),
-      moves.map(move => new MoveDto(move.mode_id, move.name)),
+      moveDtos,
       abilities.map(ability => new AbilityDto(ability.ability_id, ability.name))
     );
     return pokemonDto;
