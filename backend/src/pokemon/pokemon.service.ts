@@ -8,7 +8,7 @@ import MoveDto from 'src/dto/Move.dto';
 @Injectable()
 export class PokemonService {
 
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService) { }
 
   async getAllPokemon(): Promise<PokemonDto[]> {
     const query = 'select * from pokemon;';
@@ -76,11 +76,11 @@ export class PokemonService {
       }
     }
 
-    return {pokemonId: pokemon_id};
+    return { pokemonId: pokemon_id };
   }
 
   async updatePokemon(id: string, pokemonDto: any): Promise<void> {
-    const query = 'update pokemon set (name = $2, height = $3, weight = $4) where pokemon_id = $1;';
+    const query = 'update pokemon set name = $2, height = $3, weight = $4 where pokemon_id = $1;';
     await this.databaseService.query(query, [id, pokemonDto.name, pokemonDto.height, pokemonDto.weight]);
   }
 

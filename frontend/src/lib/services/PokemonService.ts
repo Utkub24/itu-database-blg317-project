@@ -112,7 +112,6 @@ const PokemonService = {
   getAllTypes: async (): Promise<TypeDto[]> =>
     handleRequest(async () => {
       const response = await axios.get(`${API_BASE_URL}/type/all`);
-      console.log(response.data)
       return response.data.map((type: any) => new TypeDto(type.type_id, type.type_name));
     }),
 
@@ -135,7 +134,6 @@ const PokemonService = {
   getAllAbilities: async (): Promise<AbilityDto[]> =>
     handleRequest(async () => {
       const response = await axios.get(`${API_BASE_URL}/ability/all`);
-      console.log(response.data)
       return response.data.map(
         (ability: any) => new AbilityDto(ability.ability_id, ability.name)
       );
