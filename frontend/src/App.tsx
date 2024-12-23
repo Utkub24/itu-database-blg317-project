@@ -7,6 +7,8 @@ import PokemonCard from "./lib/components/PokemonCard";
 import { DataTable } from "./lib/pokemon-table/data-table";
 
 import { columns } from "@/lib/pokemon-table/columns"
+import Header from "./lib/components/Header";
+import PokemonService from "./lib/services/PokemonService";
 
 const App = () => {
   const examplePokemon = new PokemonDto(
@@ -24,19 +26,30 @@ const App = () => {
 
   const pokemonData = [examplePokemon, new PokemonDto()];
 
-  const handlePokemonUpdate = (oldPokemon: PokemonDto, newPokemon: PokemonDto) => {
-
+  const handlePokemonUpdate = async(oldPokemon: PokemonDto, newPokemon: PokemonDto) => {
+    try {
+      const pokemon = await PokemonService.updatePokemon(oldPokemon.id, newPokemon); // Geçersiz ID
+      console.log(pokemon);
+    } catch (error: any) {
+      console.error("Error fetching Pokémon:", error.message);
+    }
   };
 
   return (
-    <div className="p-4 bg-gray-50 min-h-screen flex flex-col justify-center">
-      <DataTable columns={columns} data={pokemonData} onUpdate={handlePokemonUpdate} />
-      <button
-        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-      >
-        Edit Pokémon
-      </button>
+    <div>
+      <Header />
+      <main className="p-4">
+        <div className="p-4 bg-gray-50 min-h-screen flex flex-col justify-center">
+          <DataTable columns={columns} data={pokemonData} onUpdate={handlePokemonUpdate} />
+          <button
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Edit Pokémon
+          </button>
+        </div>
+      </main>
     </div>
+
   );
 };
 
