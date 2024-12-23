@@ -61,13 +61,13 @@ export class PokemonService {
 
     const abilities_query = 'INSERT INTO pokemon_abilities VALUES ($1, $2, $3);';
     for (const ability of pokemonDto.abilities) {
-      await this.databaseService.query(abilities_query, [pokemon_id, ability.ability_id, false]);
+      await this.databaseService.query(abilities_query, [pokemon_id, ability.id, false]);
     }
 
     const types_query = 'INSERT INTO pokemon_types VALUES ($1, $2, $3);';
     let is_primary = true;
     for (const type of pokemonDto.types) {
-      await this.databaseService.query(types_query, [pokemon_id, type.type_id, is_primary]);
+      await this.databaseService.query(types_query, [pokemon_id, type.id, is_primary]);
       if (is_primary) {
         is_primary = false;
       }
