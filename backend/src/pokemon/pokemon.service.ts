@@ -41,26 +41,36 @@ export class PokemonService {
   }
 
   async createPokemon(pokemonDto: any): Promise<any> {
-    const pokemon_query = 'insert into pokemon (name, weight, height) values ($1, $2, $3, $4);';
+    console.log(pokemonDto);
+
+    const id_query = 'SELECT MAX(pokemon_id) FROM pokemon;';
+    const pokemon_id = await this.databaseService.query(id_query).then(res => res.rows[0].max + 1);
+
+    console.log(pokemon_id);
+
+    const pokemon_query = 'insert into pokemon (pokemon_id, name, weight, height) values ($1, $2, $3, $4);';
     const pokemon = await this.databaseService.query(
-      pokemon_query, 
-      [pokemonDto.id, pokemonDto.name, pokemonDto.weight, pokemonDto.height]
+      pokemon_query,
+      [pokemon_id, pokemonDto.name, pokemonDto.weight, pokemonDto.height]
     );
-    const pokemon_id = pokemon.rows[0].pokemon_id;
 
     const moves_query = 'INSERT INTO pokemon_moves VALUES ($1, $2, $3);';
     for (const move of pokemonDto.moves) {
-      await this.databaseService.query(moves_query, [pokemon_id, move.move_id, move.name]);
+      await this.databaseService.query(moves_query, [pokemon_id, move.id, 1]);
     }
 
     const abilities_query = 'INSERT INTO pokemon_abilities VALUES ($1, $2, $3);';
     for (const ability of pokemonDto.abilities) {
-      await this.databaseService.query(abilities_query, [pokemon_id, ability.ability_id, ability.name]);
+      await this.databaseService.query(abilities_query, [pokemon_id, ability.ability_id, false]);
     }
 
     const types_query = 'INSERT INTO pokemon_types VALUES ($1, $2, $3);';
+    let is_primary = true;
     for (const type of pokemonDto.types) {
-      await this.databaseService.query(types_query, [pokemon_id, type.type_id, type.type_name]);
+      await this.databaseService.query(types_query, [pokemon_id, type.type_id, is_primary]);
+      if (is_primary) {
+        is_primary = false;
+      }
     }
 
     return {pokemonId: pokemon_id};

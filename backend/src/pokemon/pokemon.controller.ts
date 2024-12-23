@@ -12,6 +12,7 @@ export class PokemonController {
       return await this.pokemonService.getAllPokemon();
     }
     catch (error) {
+      console.log(error);
       return error;
     }
   }
@@ -30,9 +31,11 @@ export class PokemonController {
   @Post()
   async createPokemon(@Body() pokemonDto: any): Promise<any> {
     try {
+      console.log("asd");
       return await this.pokemonService.createPokemon(pokemonDto);
     }
     catch (error) {
+      console.log(error);
       return error;
     }
   }
@@ -43,6 +46,7 @@ export class PokemonController {
       return await this.pokemonService.updatePokemon(id);
     }
     catch (error) {
+      console.log(error);
       return error;
     }
   }
@@ -53,6 +57,7 @@ export class PokemonController {
       return await this.pokemonService.deletePokemon(id);
     }
     catch (error) {
+      console.log(error);
       return error;
     }
   }
