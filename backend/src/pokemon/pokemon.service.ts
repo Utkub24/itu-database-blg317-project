@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
+import PokemonDto from 'src/dto/Pokemon.dto';
+import TypeDto from 'src/dto/Type.dto';
+import AbilityDto from 'src/dto/Ability.dto';
+import MoveDto from 'src/dto/Move.dto';
 
 @Injectable()
 export class PokemonService {
@@ -7,8 +11,8 @@ export class PokemonService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async getAllPokemon() {
-    const query = '';
-    return await this.databaseService.query(query);
+    const query = 'select * from pokemon;';
+    return await this.databaseService.query(query).then(res => res.rows);
   }
 
   async getPokemonById(id: string) {

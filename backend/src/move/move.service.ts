@@ -6,7 +6,7 @@ export class MoveService {
   constructor(private databaseService: DatabaseService) {}
 
   async getAllMoves() {
-    const query = '';
-    return this.databaseService.query(query);
+    const query = 'select * from move;';
+    return this.databaseService.query(query).then((res) => res.rows);
   }
 }

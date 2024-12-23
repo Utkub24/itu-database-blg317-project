@@ -6,7 +6,7 @@ export class AbilityService {
   constructor(private databaseService: DatabaseService) {}
 
   async getAllAbilities() {
-    const query = '';
-    return this.databaseService.query(query);
+    const query = 'select * from ability;';
+    return this.databaseService.query(query).then((res) => res.rows);
   }
 }

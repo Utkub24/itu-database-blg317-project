@@ -6,7 +6,7 @@ export class TypeService {
   constructor(private databaseService: DatabaseService) {}
 
   async getAllTypes() {
-    const query = '';
-    return this.databaseService.query(query);
+    const query = 'select * from type;';
+    return this.databaseService.query(query).then((res) => res.rows);
   }
 }
